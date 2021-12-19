@@ -1,32 +1,42 @@
 package br.com.arthurschultz.library.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import br.com.arthurschultz.library.model.Book;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import br.com.arthurschultz.library.model.dto.bookDTO;
 import br.com.arthurschultz.library.service.BookService;
 import br.com.arthurschultz.library.util.BookMapper;
 
-@RestController
+@Controller
 @RequestMapping("/books")
-
 public class BookController {
     @Autowired
     private BookService service;
     
-    @PostMapping
-    public ResponseEntity<bookDTO> insert(@RequestBody bookDTO book) {
-        var isSuccess = service.insertOrUpdate(BookMapper.toBook(book));
+    @GetMapping
+    public String formInsert(Model model) {
+        bookDTO book = new bookDTO();
+        model.addAttribute("objBook", book);
+        return "pages/register";
+    }
 
-        if(isSuccess != null) {
-            return new ResponseEntity<>(BookMapper.fromBook(isSuccess), HttpStatus.CREATED);
+    @PostMapping
+    public String Insert(@ModelAttribute bookDTO bookDto) {
+        var book = service.insertOrUpdate(BookMapper.toBook(bookDto));
+        
+        if (book.getId() != 0) {
+            return "pages/success";
+        } else {
+            return "pages/error";
         }
 
-        return new ResponseEntity<>(new bookDTO(), HttpStatus.NOT_FOUND);
+        
     }
+    
+
 }

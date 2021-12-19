@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca - Cadastro de livros - Sucesso</title>
+</head>
+<body>
+    <form method="POST" th:action="@{/books}" th:object="${objBook}">
+        <label>Nome do livro: </label>
+        <input type="text" autocomplete=off id="nome" th:field="*{nome}" required />
+        <label>Autor: </label>
+        <input type="text" id="nome" th:field="*{autor}" required/>
+        <label>Gênero: </label>
+        <select th:field="*{genero}" >
+            <option value="drama" 
+                    th:each="genre : ${T(br.com.arthurschultz.library.model.Genre).values()}" 
+                    th:value="${genre}" 
+                    th:text="${genre}">
+            </option>
+        </select>
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>

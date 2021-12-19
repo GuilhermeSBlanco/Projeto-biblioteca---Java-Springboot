@@ -2,9 +2,11 @@ package br.com.arthurschultz.library.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import br.com.arthurschultz.library.model.Genre;
+//import br.com.arthurschultz.library.model.Genre;
 
 
 // @Entity  - Notação que indica que uma determinada classe
@@ -17,6 +19,7 @@ import br.com.arthurschultz.library.model.Genre;
 @Table(name = "books")
 public class Book {
     @Id // @id representa a pk dessa tabela
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
     @Column(columnDefinition = "Varchar(50) not null")
