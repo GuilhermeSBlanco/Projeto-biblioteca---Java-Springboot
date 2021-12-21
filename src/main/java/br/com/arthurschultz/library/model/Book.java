@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "books")
 public class Book {
     @Id // @id representa a pk dessa tabela
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
 
     @Column(columnDefinition = "Varchar(50) not null")
